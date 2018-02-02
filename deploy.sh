@@ -1,8 +1,5 @@
 #!/bin/bash
-#Parametros a cambiar flavor, key_name, image, net
-#Crear stack en openstack mediante heat
-#Si quiere cambiar parametros, por tener claves diferentes o diferente red:
-#openstack stack create -t ./heat/servers.yml stack --parameters "key_name=tu_key" "net=tu_red_interna"
+#parameters you can change: flavor, key_name, image, net
 openstack stack create -t ./heat/servers.yml stack
 
 flag=1
