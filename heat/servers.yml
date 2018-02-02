@@ -1,0 +1,66 @@
+heat_template_version: newton
+
+description: 2 servers
+
+parameters:
+  flavor:
+    type: string
+    default: "m1.mini"
+  image:
+    type: string
+    default: "debian stretch 9.1"
+  net:
+    type: string
+    default: "red de manuel.franco"
+  key_name:
+    type: string
+    default: "cloud"  
+
+resources:
+  floating_ip:
+    type: OS::Nova::FloatingIP
+    properties:
+      pool: ext-net
+  floating_ip2:
+    type: OS::Nova::FloatingIP
+    properties:
+      pool: ext-net
+
+  server1:
+    type: OS::Nova::Server
+    properties:
+      name: "server1"
+      key_name: { get_param: key_name }
+      flavor: { get_param: flavor }
+      image: { get_param: image }
+      networks:
+        - network: { get_param: net}
+
+  server2:
+    type: OS::Nova::Server
+    properties:
+      name: "server2"
+      key_name: { get_param: key_name}
+      flavor: { get_param: flavor }
+      image: { get_param: image }
+      networks:
+        - network: { get_param: net }
+
+  association:
+    type: OS::Nova::FloatingIPAssociation
+    properties:
+      floating_ip: { get_resource: floating_ip }
+      server_id: { get_resource: server1 }
+
+  association2:
+    type: OS::Nova::FloatingIPAssociation
+    properties:
+      floating_ip: { get_resource: floating_ip2 }
+      server_id: { get_resource: server2 }
+outputs:
+  server1_public_ip:
+    value: { get_attr: [server1, first_address] }
+    description: Server1's floating IP
+  server2_public_ip:
+    value: { get_attr: [server2, first_address] }
+    description: Server2's floating IP
