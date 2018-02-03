@@ -6,7 +6,7 @@ source ./openstack/auto_wordpress/bin/activate
 pip install python-openstackclient ansible python-heatclient
 
 #parameters you can change: flavor, key_name, image, net
-openstack stack create -t ./heat/servers.yml stack
+openstack stack create -t ./heat/servers.yml stack --parameter "flavor=m1.mini" --parameter "image=Debian Stretch 9.1" --parameter "key_name=cloud" --parameter "net=red de manuel.franco"
 
 flag=1
 while [[ $flag == 1 ]]; do
