@@ -6,5 +6,3 @@ wp_url: 'wordpress.example.com'
 wp_title: 'ansible-wordpress'
 wp_admin: 'wordpress'
 wp_pass: 'wordpress'
-server1_ip: 172.22.200.238
-server2_ip: 172.22.201.76
