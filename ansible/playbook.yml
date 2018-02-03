@@ -22,7 +22,7 @@
        file: path=/var/www/html owner=www-data group=www-data state=directory recurse=yes
 
      - name: bind9 template
-       template: src=./conf/bind/db.franco.gonzalonazareno dest=/var/cache/bind/
+       template: src=./conf/bind/db.example.com dest=/var/cache/bind/
 
      - name: bind9 conf
        template: src=./conf/bind/named.conf.local dest=/etc/bind/

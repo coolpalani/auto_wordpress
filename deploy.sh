@@ -1,4 +1,10 @@
 #!/bin/bash
+#Instalation of packages:
+sudo apt update && sudo apt install virtualenv
+mkdir openstack && virtualenv ./openstack/auto_wordpress
+source ./openstack/auto_wordpress/bin/activate
+pip install python-openstackclient ansible python-heatclient
+
 #parameters you can change: flavor, key_name, image, net
 openstack stack create -t ./heat/servers.yml stack
 
@@ -22,8 +28,7 @@ while [[ $flag == 1 ]]; do
 		flag=0
 	fi
 done
-echo " " > ./ansible/hosts.ini
-echo [server1] >> ./ansible/hosts.ini
+echo [server1] > ./ansible/hosts.ini
 echo $IP >> ./ansible/hosts.ini
 echo [server2] >> ./ansible/hosts.ini
 echo $IP2 >> ./ansible/hosts.ini
@@ -38,3 +43,5 @@ while [[ $flag == 1 ]]; do
 	fi
 done
 ansible-playbook playbook.yml
+deactivate
+rm -rf  ../openstack

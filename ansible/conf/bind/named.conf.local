@@ -1,6 +1,6 @@
-zone "franco.gonzalonazareno.org" {
+zone "example.com" {
         type master;
-        file "/var/cache/bind/db.franco.gonzalonazareno";
+        file "/var/cache/bind/db.example.com";
         forwarders {
         };
 };
