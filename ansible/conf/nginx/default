@@ -9,8 +9,6 @@ server {
         server_name wordpress.example.com;
 
         location / {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying a 40$
                 try_files $uri $uri/ =404;
         }
 
@@ -20,10 +18,7 @@ server {
                 fastcgi_pass unix:/run/php/php7.0-fpm.sock;
         }
 
-        location = /favicon.ico { log_not_found off; access_log off; }
-        location = /robots.txt { log_not_found off; access_log off; allow all; }
-        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-                expires max;
-                log_not_found off;
-        }
+	location ~ /\.ht {
+		dey all;
+	}
 }
