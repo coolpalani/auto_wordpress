@@ -1,11 +1,7 @@
 # auto_wordpress
 Wordpress automatic deployment with openstack heat and ansible
 
-For the execution of deploy.sh you need an activated python virtualenv, credentials of openstack and have installed:
-
-pip install python-openstackclient
-
-pip install ansible
+For the execution of deploy.sh you need activate openstack's credentials.
 
 Then, you have to modify the script with your own Openstack's parameters:
 
