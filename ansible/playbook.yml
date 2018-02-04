@@ -18,9 +18,6 @@
      - name: mysql listen file
        copy: src=./conf/mysql/50-server.cnf dest=/etc/mysql/mariadb.conf.d/50-server.cnf
 
-     - name: change ownership
-       file: path=/var/www/html owner=www-data group=www-data state=directory recurse=yes
-
      - name: bind9 template
        template: src=./conf/bind/db.example.com dest=/var/cache/bind/
 
@@ -45,18 +42,21 @@
                     - php7.0-fpm
                     - unzip
                     - php-mysql
-          
+
+          - name: copy resolv.conf
+            template: src=./conf/resolv/resolv.conf dest=/etc/resolv.conf
+
           - name: unzip wordpress on web server's directory
             unarchive: src=./conf/wordpress/wordpress-4.9.2.zip dest=/var/www/html
-                
+
           - name: copy wp-config
-            template: src=./conf/wordpress/wp-config.php dest=/var/www/html/wordpress/
-          
-          - name: copy resolv.conf
-            template: src=./conf/resolv/resolv.conf dest=/etc/
+            template: src=./conf/wordpress/wp-config.php dest=/var/www/html/wordpress/wp-config.php
+  
+          - name: change ownership
+            file: path=/var/www/html owner=www-data group=www-data state=directory recurse=yes
 
           - name: nginx's configuration
-            copy: src=./conf/nginx/default dest=/etc/nginx/sites-enabled/
+            copy: src=./conf/nginx/default dest=/etc/nginx/sites-enabled/default
 
           - name: restart services
             service: name={{ item  }} state=restarted
@@ -65,11 +65,7 @@
                     - php7.0-fpm
 
           - name: download wp-cli
-            get_url: 
-              url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-              dest: .
-              owner: debian
-              group: debian
+            get_url: url=https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar dest=/usr/local/bin/wp mode=a+x
  
-          - name: exec script
-            script: ./conf/wordpress/run.sh --some-arguments {{ wp_url }} {{ wp_title }} {{ wp_admin }} {{ wp_pass }}          
+          - name: configure wordpress
+            shell: sudo -u debian -i -- wp core install --url={{ wp_url }} --title={{ wp_title }} --admin_user={{ wp_admin }} --admin_password={{ wp_pass }} --admin_email=admin@wordpress.com --path=/var/www/html/wordpress 
