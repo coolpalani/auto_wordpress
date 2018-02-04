@@ -10,3 +10,5 @@ Then, you have to modify the script with your own Openstack's parameters:
 openstack stack create -t ./heat/servers.yml stack --parameters "key_name=your_key" "net=your_private_net"
 ~~~
 Also you can personalize wordpress with group_vars/all file where are all variables of wordpress configuration.
+
+When installation complete you have to put the server1's ip en first position of resolv.conf and search wordpress.example.com
