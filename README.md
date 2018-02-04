@@ -1,7 +1,7 @@
 # auto_wordpress
 Wordpress automatic deployment with openstack heat and ansible.
 
-Is necesary hace already install sudo.
+Is necesary have already install sudo.
 
 For the execution of deploy.sh you need activate openstack's credentials and change the ssh key on ansible.cfg.
 
